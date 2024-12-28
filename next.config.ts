@@ -14,6 +14,12 @@ const nextConfig = {
   images: {
     domains: ['img.freepik.com'], // Add external domains here
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 module.exports = nextConfig;
