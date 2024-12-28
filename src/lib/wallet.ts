@@ -11,7 +11,7 @@ export function useWallet() {
   const [isConnecting, setIsConnecting] = useState(false)
 
   useEffect(() => {
-    if (typeof window.ethereum !== 'undefined') {
+    if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
       window.ethereum.on('accountsChanged', (accounts: string[]) => {
         if (accounts.length > 0) {
           setAddress(accounts[0])
@@ -23,7 +23,7 @@ export function useWallet() {
   }, [])
 
   const connect = async () => {
-    if (typeof window.ethereum !== 'undefined') {
+    if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
       try {
         setIsConnecting(true)
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
