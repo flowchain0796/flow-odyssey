@@ -1,47 +1,55 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
+// Declare global window interface to include ethereum
 declare global {
   interface Window {
-    ethereum?: any
+    ethereum?: any;
   }
 }
 
 export function useWallet() {
-  const [address, setAddress] = useState<string | null>(null)
-  const [isConnecting, setIsConnecting] = useState(false)
+  const [address, setAddress] = useState<string | null>(null);
+  const [isConnecting, setIsConnecting] = useState(false);
 
   useEffect(() => {
-    if (typeof window.ethereum !== 'undefined') {
-      window.ethereum.on('accountsChanged', (accounts: string[]) => {
+    if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
+      // Add event listener for account changes
+      const handleAccountsChanged = (accounts: string[]) => {
         if (accounts.length > 0) {
-          setAddress(accounts[0])
+          setAddress(accounts[0]);
         } else {
-          setAddress(null)
+          setAddress(null);
         }
-      })
+      };
+
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+
+      // Cleanup the event listener on unmount
+      return () => {
+        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+      };
     }
-  }, [])
+  }, []);
 
   const connect = async () => {
-    if (typeof window.ethereum !== 'undefined') {
+    if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
       try {
-        setIsConnecting(true)
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-        setAddress(accounts[0])
+        setIsConnecting(true);
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setAddress(accounts[0]);
       } catch (error) {
-        console.error('Failed to connect:', error)
+        console.error('Failed to connect:', error);
       } finally {
-        setIsConnecting(false)
+        setIsConnecting(false);
       }
     } else {
-      console.error('MetaMask is not installed')
+      console.error('MetaMask is not installed');
     }
-  }
+  };
 
   const disconnect = () => {
-    setAddress(null)
-  }
+    setAddress(null);
+  };
 
-  return { address, isConnecting, connect, disconnect }
+  return { address, isConnecting, connect, disconnect };
 }
-

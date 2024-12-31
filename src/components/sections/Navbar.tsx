@@ -6,15 +6,40 @@ import { Button } from '@/components/ui/button'
 import { useWallet } from '@/lib/wallet'
 import { Wallet, Coins, Menu, X } from 'lucide-react'
 import { useState } from 'react'
+import { setWalletBalance } from '@/lib/redux/walletslice'
+import { BrowserProvider, ethers } from "ethers"
+import abi from "@/contractInfo/abi.json"
+import caddress from "@/contractInfo/address.json"
+
 
 export default function Navbar() {
   const { address, isConnecting, connect, disconnect } = useWallet()
-  const balance = useAppSelector((state) => state.wallet.balance)
+  // const balance = useAppSelector((state) => state.wallet.balance)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [balance, setBalance] = useState(100)
+
+  const handleWithdraw = async () => {
+    // Withdraw logic here (You can call your contract function or any other logic)
+
+
+    alert('Withdraw function triggered! Implement your logic here.');
+
+    const provider = new BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner()
+    const account = await signer.getAddress()
+    const bal = balance.toString();
+    const questContract = new ethers.Contract(caddress.contractAddress, abi.abi, signer)
+    // setQuest(questContract);
+    // mint();
+    // console.log(balance, "========inside withdraw===")
+
+    await (await questContract.mint(account, ethers.parseUnits(parseInt(bal).toString(), 18))).wait();
+    alert('Withdraw your earned FLOW coins!');
+  };
 
   const WalletInfo = () => (
     <>
-      <motion.div 
+      <motion.div
         className="bg-white/10 backdrop-blur-md rounded-xl px-4 py-2 border border-white/20 flex items-center gap-2"
         whileHover={{ scale: 1.02 }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
@@ -25,7 +50,7 @@ export default function Navbar() {
         </span>
       </motion.div>
 
-      <motion.div 
+      <motion.div
         className="bg-white/10 backdrop-blur-md rounded-xl px-4 py-2 border border-white/20 flex items-center gap-2"
         whileHover={{ scale: 1.02 }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
@@ -62,7 +87,7 @@ export default function Navbar() {
             Flow Odyssey
           </span>
         </motion.div>
-        
+
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-4">
           <AnimatePresence mode="wait">
@@ -86,7 +111,10 @@ export default function Navbar() {
                 <Button
                   variant="ghost"
                   className="text-white hover:bg-pink-400/20 border border-pink-300/20 backdrop-blur-md rounded-xl px-6 transition-all duration-200 hover:scale-105"
-                  onClick={connect}
+                  onClick={() => {
+                    connect()
+                    setBalance(100)
+                  }}
                   disabled={isConnecting}
                 >
                   {isConnecting ? 'Connecting...' : 'Connect Wallet'}
@@ -121,7 +149,7 @@ export default function Navbar() {
             <div className="container mx-auto py-4">
               {address ? (
                 <div className="flex flex-col space-y-4">
-                  <motion.div 
+                  <motion.div
                     className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 flex items-center gap-2"
                     whileHover={{ scale: 1.02 }}
                   >
@@ -131,7 +159,7 @@ export default function Navbar() {
                     </span>
                   </motion.div>
 
-                  <motion.div 
+                  <motion.div
                     className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 flex items-center gap-2"
                     whileHover={{ scale: 1.02 }}
                   >
@@ -158,6 +186,7 @@ export default function Navbar() {
                   className="text-white hover:bg-pink-400/20 border border-pink-300/20 backdrop-blur-md rounded-xl p-4 w-full"
                   onClick={() => {
                     connect()
+                    setWalletBalance(100)
                     setIsMobileMenuOpen(false)
                   }}
                   disabled={isConnecting}

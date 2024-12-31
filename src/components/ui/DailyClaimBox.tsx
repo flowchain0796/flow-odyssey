@@ -4,6 +4,9 @@ import { motion } from 'framer-motion'
 import { useAppSelector, useAppDispatch } from '@/lib/redux/hooks'
 import { claimDaily } from '@/lib/redux/exploreslice'
 import { Button } from '@/components/ui/button'
+import { BrowserProvider, ethers } from "ethers"
+import abi from "@/contractInfo/abi.json"
+import caddress from "@/contractInfo/address.json"
 
 export default function DailyClaimBox() {
   const dispatch = useAppDispatch()
@@ -11,7 +14,28 @@ export default function DailyClaimBox() {
 
   const handleClaim = () => {
     dispatch(claimDaily())
+    handleWithdraw();
   }
+
+  const handleWithdraw = async () => {
+    // Withdraw logic here (You can call your contract function or any other logic)
+
+
+    alert('Withdraw function triggered! Implement your logic here.');
+
+    const provider = new BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner()
+    const account = await signer.getAddress()
+    const bal = 100;
+    const questContract = new ethers.Contract(caddress.contractAddress, abi.abi, signer)
+    // setQuest(questContract);
+    // mint();
+    // console.log(balance, "========inside withdraw===")
+
+    await (await questContract.mint(account, ethers.parseUnits(parseInt(bal).toString(), 18))).wait();
+    alert('Withdraw your earned FLOW coins!');
+  };
+
 
   return (
     <motion.div

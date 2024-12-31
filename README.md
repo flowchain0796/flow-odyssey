@@ -1,3 +1,55 @@
+Add this ODY token as manually into your wallet on FLOW Chain
+
+Contract Address = 0x684C6F53d0372F9678e6031a81963847477Faaf3
+
+Verify this Contract -> Verify ODY
+
+About FLow Odyssey (build on FLOW chain)
+
+VERIFY HERE -> https://evm-testnet.flowscan.io/token/0x684C6F53d0372F9678e6031a81963847477Faaf3
+
+-----------
+ONE LINER
+
+A Web3 platform for decentralized content sharing and daily rewards with ODY tokens.
+
+----------
+
+# Flow Odyssey 🌐🚀
+
+Flow Odyssey is a Web3-powered social media platform where users can share content (images and videos) in a decentralized way. Leveraging the power of the blockchain, it also introduces the **ODY token**—a unique cryptocurrency that users can use to claim daily tokens, fostering engagement and reward-based interactions.
+
+---
+
+## 🌟 Features
+
+- **Decentralized Content Sharing**: Share images and videos with tags in a secure and censorship-resistant manner.
+- **Daily Rewards**: Claim ODY tokens daily to incentivize user participation.
+- **Community-Driven**: Build a vibrant community where users interact transparently and fairly.
+- **Web3 Integration**: Seamlessly integrated with blockchain technology for transparency and security.
+
+---
+
+## 🚀 Technologies Used
+
+- **Blockchain**: Built on [Flow Blockchain or specify which blockchain you use].
+- **Smart Contracts**: Powers the ODY token and transaction mechanisms.
+- **Frontend Framework**: [React, Next.js, etc.]
+- **Backend**: [Node.js, Flask, etc.]
+- **Storage**: Decentralized storage solutions like IPFS
+- **Styling**: [CSS, Tailwind, etc.]
+
+---
+
+## 🛠️ Installation & Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repository/flow-odyssey.git
+   cd flow-odyssey
+
+----------
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
