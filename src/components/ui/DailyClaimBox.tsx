@@ -26,7 +26,7 @@ export default function DailyClaimBox() {
     const provider = new BrowserProvider(window.ethereum);
     const signer = await provider.getSigner()
     const account = await signer.getAddress()
-    const bal = 100;
+    const bal = "100";
     const questContract = new ethers.Contract(caddress.contractAddress, abi.abi, signer)
     // setQuest(questContract);
     // mint();

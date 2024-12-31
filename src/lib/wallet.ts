@@ -13,7 +13,7 @@ export function useWallet() {
 
   useEffect(() => {
     if (typeof window.ethereum !== 'undefined') {
-      window.ethereum.on('accountsChanged', (accounts: string[]) => {
+      const handleAccountsChanged = (accounts: string[]) => {
         if (accounts.length > 0) {
           setAddress(accounts[0]);
         } else {
